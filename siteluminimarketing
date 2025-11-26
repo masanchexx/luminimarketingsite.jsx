@@ -1,0 +1,150 @@
+/*
+Lumini Marketing - Single-file React App
+File: site-lumini-marketing.jsx
+Descrição: componente React exportado por padrão. Projeto simples com TailwindCSS.
+Instruções rápidas para usar:
+1) Crie um projeto React (ex: `npm create vite@latest lumini --template react`) ou use Create React App.
+2) Instale TailwindCSS seguindo a documentação oficial (tailwindcss.com) ou use o template que já possua Tailwind.
+3) Coloque este arquivo como `src/App.jsx` e rode `npm run dev` / `npm start`.
+4) Para receber formulários em produção sem backend use Formspree / Getform / Netlify Forms. Alternativamente o formulário abre um `mailto:` como fallback.
+5) Para publicar no GitHub: crie o repositório, commit/push o código e então deploy via GitHub Pages (não ideal para apps React sem build) ou use Vercel/Netlify (recomendado) diretamente ligado ao seu repositório.
+
+Informações incluídas automaticamente:
+- Email: sanchesmariaclara820@gmail.com
+- Instagram: @luminimarketingg
+
+Paleta: roxo e lilás (gradiente)
+*/
+
+import React, {useState} from 'react';
+
+export default function LuminiMarketingSite() {
+  const [form, setForm] = useState({
+    nome: '',
+    telefone: '',
+    email: 'sanchesmariaclara820@gmail.com',
+    servico: 'Agendamento de atendimento',
+    interesseFichas: false,
+    mensagem: ''
+  });
+  const [status, setStatus] = useState(null);
+
+  function handleChange(e) {
+    const {name, value, type, checked} = e.target;
+    setForm(prev => ({...prev, [name]: type === 'checkbox' ? checked : value}));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Fallback: abrir cliente de email com os dados (mailto)
+    const subject = encodeURIComponent(`Pedido de contato - ${form.servico} - ${form.nome}`);
+    const body = encodeURIComponent(
+      `Nome: ${form.nome}\nTelefone: ${form.telefone}\nEmail: ${form.email}\nServiço: ${form.servico}\nInteresse em montagem de fichas: ${form.interesseFichas ? 'Sim' : 'Não'}\n\nMensagem:\n${form.mensagem}`
+    );
+    window.location.href = `mailto:${form.email}?subject=${subject}&body=${body}`;
+    setStatus('Enviando... (abrindo seu cliente de email)');
+
+    // Se integrar com Formspree ou outro serviço, substitua o bloco acima por fetch() para o endpoint.
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-purple-700 to-violet-400 p-6">
+      <div className="max-w-5xl w-full bg-white/90 rounded-2xl shadow-2xl overflow-hidden grid md:grid-cols-2">
+        {/* Left: Hero / Info */}
+        <section className="p-8 md:p-12 bg-gradient-to-b from-purple-800 to-purple-600 text-white">
+          <h1 className="text-3xl md:text-4xl font-extrabold">Lumini Marketing</h1>
+          <p className="mt-3 text-sm md:text-base opacity-90">Soluções criativas em marketing digital — agende um atendimento, contrate serviços ou tire dúvidas com a nossa equipe.</p>
+
+          <div className="mt-6 space-y-4">
+            <div>
+              <h3 className="text-sm uppercase tracking-wide opacity-90">Contato rápido</h3>
+              <p className="font-medium">Email: <a href="mailto:sanchesmariaclara820@gmail.com" className="underline">sanchesmariaclara820@gmail.com</a></p>
+              <p className="font-medium">Instagram: <a href="https://instagram.com/luminimarketingg" target="_blank" rel="noreferrer" className="underline">@luminimarketingg</a></p>
+            </div>
+
+            <div className="bg-white/10 p-3 rounded-lg">
+              <h4 className="text-sm font-semibold">O que oferecemos</h4>
+              <ul className="mt-2 text-sm list-disc list-inside">
+                <li>Gestão de redes sociais</li>
+                <li>Criação de conteúdo e artes</li>
+                <li>Montagem de fichas e formulários personalizados</li>
+                <li>Consultoria e agendamento de atendimento</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <h4 className="text-sm uppercase opacity-90">Atendimento</h4>
+            <p className="mt-2 text-sm">Preencha o formulário ao lado ou escreva diretamente para nosso email. Para respostas mais rápidas, inclua telefone de contato.</p>
+          </div>
+
+          <footer className="mt-8 text-xs opacity-80">© {new Date().getFullYear()} Lumini Marketing — Desenvolvido com foco em conversão.</footer>
+        </section>
+
+        {/* Right: Form */}
+        <main className="p-8 md:p-12">
+          <h2 className="text-2xl font-bold text-purple-900">Fale conosco</h2>
+          <p className="mt-2 text-sm text-gray-600">Agende atendimento, contrate um serviço ou tire dúvidas. Pedimos telefone para facilitar o contato.</p>
+
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Nome</label>
+              <input required name="nome" value={form.nome} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-200 shadow-sm p-2" placeholder="Seu nome" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Telefone</label>
+              <input required name="telefone" value={form.telefone} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-200 shadow-sm p-2" placeholder="(00) 90000-0000" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <input required name="email" value={form.email} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-200 shadow-sm p-2" placeholder="seu@exemplo.com" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Serviço / Motivo</label>
+              <select name="servico" value={form.servico} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-200 shadow-sm p-2">
+                <option>Agendamento de atendimento</option>
+                <option>Contratar serviços (social media)</option>
+                <option>Criação de conteúdo/arte</option>
+                <option>Montagem de fichas/formulários</option>
+                <option>Outros / Dúvidas</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input type="checkbox" name="interesseFichas" checked={form.interesseFichas} onChange={handleChange} id="fichas" className="h-4 w-4" />
+              <label htmlFor="fichas" className="text-sm">Tenho interesse na montagem de fichas personalizadas</label>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Mensagem</label>
+              <textarea name="mensagem" value={form.mensagem} onChange={handleChange} rows={4} className="mt-1 block w-full rounded-md border-gray-200 shadow-sm p-2" placeholder="Conte-nos o que você precisa..."></textarea>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button type="submit" className="px-4 py-2 rounded-lg bg-purple-700 text-white font-semibold hover:opacity-95">Enviar contato</button>
+              <button type="button" onClick={() => {navigator.clipboard.writeText('sanchesmariaclara820@gmail.com'); setStatus('Email copiado para a área de transferência');}} className="px-4 py-2 rounded-lg border border-purple-300 text-purple-800">Copiar email</button>
+            </div>
+
+            {status && <p className="text-sm text-gray-600">{status}</p>}
+
+            <div className="mt-4 text-xs text-gray-500">
+              <strong>Privacidade:</strong> suas informações serão usadas apenas para contato e agendamento. Para aceitar submissões automáticas (sem abrir o email do usuário), integre um serviço de formulário.
+            </div>
+          </form>
+
+          <div className="mt-8 border-t pt-4 text-sm text-gray-600">
+            <h4 className="font-semibold text-purple-900">Como publicar (resumo)</h4>
+            <ol className="mt-2 list-decimal list-inside">
+              <li>Crie um repositório no GitHub e faça push do seu código.</li>
+              <li>Conecte o repositório ao Vercel ou Netlify (deploy automático). Recomendado para React.</li>
+              <li>Se preferir GitHub Pages, rode `npm run build` e configure o branch `gh-pages` — menos recomendado para SPA sem configuração.</li>
+            </ol>
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
