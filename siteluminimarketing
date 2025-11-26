@@ -1,21 +1,3 @@
-/*
-Lumini Marketing - Single-file React App
-File: site-lumini-marketing.jsx
-Descrição: componente React exportado por padrão. Projeto simples com TailwindCSS.
-Instruções rápidas para usar:
-1) Crie um projeto React (ex: `npm create vite@latest lumini --template react`) ou use Create React App.
-2) Instale TailwindCSS seguindo a documentação oficial (tailwindcss.com) ou use o template que já possua Tailwind.
-3) Coloque este arquivo como `src/App.jsx` e rode `npm run dev` / `npm start`.
-4) Para receber formulários em produção sem backend use Formspree / Getform / Netlify Forms. Alternativamente o formulário abre um `mailto:` como fallback.
-5) Para publicar no GitHub: crie o repositório, commit/push o código e então deploy via GitHub Pages (não ideal para apps React sem build) ou use Vercel/Netlify (recomendado) diretamente ligado ao seu repositório.
-
-Informações incluídas automaticamente:
-- Email: sanchesmariaclara820@gmail.com
-- Instagram: @luminimarketingg
-
-Paleta: roxo e lilás (gradiente)
-*/
-
 import React, {useState} from 'react';
 
 export default function LuminiMarketingSite() {
